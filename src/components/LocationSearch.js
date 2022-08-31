@@ -12,6 +12,7 @@ function LocationSearch() {
             console.log(autocomplete.getPlace().formatted_address)
         })
         }, [])
+
     return (
     <div>
         <h1>Location Search Bar</h1>
