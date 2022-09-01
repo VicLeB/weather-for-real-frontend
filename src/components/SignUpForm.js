@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 const ENDPOINT = 'http://localhost:3000'
 
-function SignUpForm() {
+function SignUpForm({user, setUser}) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [homeLocationCode, setHomeLocationCode] = useState("")
     const [errors, setErrors] = useState([])
+
+    const navigate = useNavigate()
 
     function handleCreateUser(e){
         e.preventDefault();
@@ -25,7 +28,26 @@ function SignUpForm() {
                     },
                 }),
         }).then(res => res.json())
-        .then(console.log)
+        .then(()=>{
+            fetch(`${ENDPOINT}/login`,{
+                method: 'POST',
+                headers: {
+                    Accepts: 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user:{
+                        username,
+                        password,
+                    }
+                })
+            }).then(res=> res.json())
+            .then(json => {
+                setUser(json.user.username)
+                localStorage.setItem('token', json.jwt)
+                navigate('/')
+            })
+        })
     }
 
     return (

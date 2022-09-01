@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 const ENDPOINT = 'http://localhost:3000'
 
-function LoginForm() {
+function LoginForm({user, setUser}) {
     const [username, setUsername]= useState("")
     const [password, setPassword]= useState("")
-    const [user, setUser] = useState(undefined)
     const [errors, setErrors]= useState([])
+
+    const navigate = useNavigate()
 
     function handleLogin(e){
         e.preventDefault();
@@ -25,6 +27,7 @@ function LoginForm() {
         .then(json => {
             setUser(json.user.username)
             localStorage.setItem('token', json.jwt)
+            navigate('/')
         })
     }
 
