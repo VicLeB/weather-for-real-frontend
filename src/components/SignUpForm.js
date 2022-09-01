@@ -1,8 +1,13 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { StyledFormWrapper,
+    StyledForm,
+    StyledInput,
+    StyledButton,
+    } from '../styles/Form.style'
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000'
 
-function SignUpForm({user, setUser}) {
+function SignUpForm({setShowLogin}) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [homeLocationCode, setHomeLocationCode] = useState("")
@@ -43,7 +48,6 @@ function SignUpForm({user, setUser}) {
                 })
             }).then(res=> res.json())
             .then(json => {
-                setUser(json.user.username)
                 localStorage.setItem('token', json.jwt)
                 navigate('/')
             })
@@ -52,22 +56,23 @@ function SignUpForm({user, setUser}) {
 
     return (
     <>
-    <form onSubmit={handleCreateUser}>
+    <StyledForm onSubmit={handleCreateUser}>
         <label>
             Username
-            <input type="text" value={username} onChange={(e)=> setUsername(e.target.value)}/>
+            <StyledInput type="text" value={username} onChange={(e)=> setUsername(e.target.value)}/>
         </label>
         <label>
             Password
-            <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
+            <StyledInput type="password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
         </label>
         <label>
             Set default location with Zip/postal code:
-            <input type="text" value={homeLocationCode} onChange={(e) => setHomeLocationCode(e.target.value)}/>
-            <p>enter a 5 digit zip-code, or 6 character postal-code (example: zip: 91111 or postal:L6H7M1)</p>
+            <StyledInput type="text" value={homeLocationCode} onChange={(e) => setHomeLocationCode(e.target.value)}/>
+            <h5>* enter a 5 digit zip-code, or 6 character postal-code (example: zip: 91111 or postal:L6H7M1)</h5>
         </label>
-        <input type='submit' value="Create account"/>
-    </form>
+        <StyledButton type='submit' value="Create account">Create Account</StyledButton>
+        <p>Already have an account? <StyledButton onClick={()=> setShowLogin(true)}>Sign in</StyledButton></p>
+    </StyledForm>
     {errors? <div>{errors.map((error)=> `${error}, ` )}</div>:null}
     </>
     )
