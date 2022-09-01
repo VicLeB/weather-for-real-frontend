@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-const ENDPOINT = 'http://localhost:3000'
+const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000'
 
 function LoginForm({user, setUser}) {
     const [username, setUsername]= useState("")

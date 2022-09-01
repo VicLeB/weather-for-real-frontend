@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import useFetchAuth from '../lib/useFetchAuth'
-const ENDPOINT = 'http://localhost:3000'
+const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000'
 
 function MyPosts() {
     const [userData, setUserData] = useState('')
