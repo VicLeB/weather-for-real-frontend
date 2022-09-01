@@ -1,8 +1,13 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { StyledFormWrapper,
+    StyledForm,
+    StyledInput,
+    StyledButton,
+    } from '../styles/Form.style'
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000'
 
-function LoginForm({user, setUser}) {
+function LoginForm({setShowLogin}) {
     const [username, setUsername]= useState("")
     const [password, setPassword]= useState("")
     const [errors, setErrors]= useState([])
@@ -25,7 +30,6 @@ function LoginForm({user, setUser}) {
             })
         }).then(res=> res.json())
         .then(json => {
-            setUser(json.user.username)
             localStorage.setItem('token', json.jwt)
             navigate('/')
         })
@@ -33,18 +37,20 @@ function LoginForm({user, setUser}) {
 
     return (
         <>
-            {user? <div>Logged in as: {user}</div>: <div>No user logged in</div>}
-            <form onSubmit={handleLogin}>
+            <StyledForm onSubmit={handleLogin}>
+                <h2>Welcome Back!</h2>
                 <label>
                     Username
-                    <input type='text' value={username} onChange={(e)=> setUsername(e.target.value)}/>
+                    <StyledInput type='text' value={username} onChange={(e)=> setUsername(e.target.value)}/>
                 </label>
                 <label>
                     Password
-                    <input type='password' value={password} onChange= {(e)=> setPassword(e.target.value)}/>
+                    <StyledInput type='password' value={password} onChange= {(e)=> setPassword(e.target.value)}/>
                 </label>
-                <input type='submit' value="Login"/>
-            </form>
+                <StyledButton type='submit' >Login</StyledButton>
+                <p>Don't have and account? Create one now: <StyledButton onClick={()=> setShowLogin(false)}>Sign up</StyledButton>
+            </p>
+            </StyledForm>
             {errors? <div>{errors}</div>:<div>Login Success!</div>}
         </>
     )
