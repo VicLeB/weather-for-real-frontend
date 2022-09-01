@@ -2,27 +2,41 @@ import React from 'react'
 import {
     Nav,
     NavLink,
-    Bars,
     NavMenu,
     NavBtn,
-    NavBtnLink
+    NavBtnLink,
+    NavBtnLogout,
     } from "../styles/Navigation.style"
 
-function NavBar() {
+function NavBar({loggedIn, setLoggedIn, setCurrentUser}) {
+
+    function handleLogout(){
+        localStorage.removeItem('token');
+        setLoggedIn(false)
+        setCurrentUser(null)
+    }
+
     return (
         <>
             <Nav>
             <NavLink to='/'>
                 Weather For Real
             </NavLink>
+            {loggedIn? <>
             <NavMenu>
-                <NavLink to='/my-posts' activeStyle>
+                <NavLink to='/my-posts'>
                 My Posts
                 </NavLink>
             </NavMenu>
             <NavBtn>
+                <NavBtnLogout onClick={handleLogout}>Logout</NavBtnLogout>
+            </NavBtn>
+            </>
+            :
+            <NavBtn>
                 <NavBtnLink to='/login'>Login</NavBtnLink>
             </NavBtn>
+                }
             </Nav>
         </>
     )
