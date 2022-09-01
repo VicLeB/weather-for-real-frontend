@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import {Routes, Route} from 'react-router-dom'
+import {Navigate, Routes, Route} from 'react-router-dom'
 import Home from './views/Home';
 import Login from './views/Login';
 import NavBar from './components/NavBar';
@@ -38,6 +38,10 @@ const [loggedIn, setLoggedIn] = useState(false)
         <Route path="/" element={ <Home currentUser={currentUser}/>}/>
         <Route path="/login" element={ <Login/>}/>
         <Route path="/my-posts" element={<MyPosts/>}/>
+        <Route
+            path="*"
+            element={<Navigate to="/" replace />}
+        />
       </Routes>
     </div>
   );
