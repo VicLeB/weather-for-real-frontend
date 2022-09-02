@@ -1,4 +1,3 @@
-import React from 'react'
 
 function useFetchAuth() {
     return function(url){
@@ -6,8 +5,8 @@ function useFetchAuth() {
             headers:{
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
-        }).then(res => res.json())
-    }
+        }).then(res => res.json());
+    };
 }
 
-export default useFetchAuth
+export default useFetchAuth;

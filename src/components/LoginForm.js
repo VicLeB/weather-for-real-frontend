@@ -1,18 +1,22 @@
-import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
-import { StyledFormWrapper,
+import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import {
     StyledForm,
     StyledInput,
     StyledButton,
-    } from '../styles/Form.style'
-const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000'
+} from '../styles/Form.style';
+import { setUser } from '../slices/UserSlice';
+
+const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 function LoginForm({setShowLogin}) {
-    const [username, setUsername]= useState("")
-    const [password, setPassword]= useState("")
-    const [errors, setErrors]= useState([])
+    const [username, setUsername]= useState('');
+    const [password, setPassword]= useState('');
+    const [errors]= useState([]);
+    const dispatch = useDispatch();
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     function handleLogin(e){
         e.preventDefault();
@@ -29,10 +33,11 @@ function LoginForm({setShowLogin}) {
                 }
             })
         }).then(res=> res.json())
-        .then(json => {
-            localStorage.setItem('token', json.jwt)
-            navigate('/')
-        })
+            .then(json => {
+                localStorage.setItem('token', json.jwt);
+                dispatch(setUser(json.user));
+                navigate('/');
+            });
     }
 
     return (
@@ -48,12 +53,12 @@ function LoginForm({setShowLogin}) {
                     <StyledInput type='password' value={password} onChange= {(e)=> setPassword(e.target.value)}/>
                 </label>
                 <StyledButton type='submit' >Login</StyledButton>
-                <p>Don't have and account? Create one now: <StyledButton onClick={()=> setShowLogin(false)}>Sign up</StyledButton>
-            </p>
+                <p>Don&apos;t have and account? Create one now: <StyledButton onClick={()=> setShowLogin(false)}>Sign up</StyledButton>
+                </p>
             </StyledForm>
             {errors? <div>{errors}</div>:<div>Login Success!</div>}
         </>
-    )
+    );
 }
 
-export default LoginForm
+export default LoginForm;
