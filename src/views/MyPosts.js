@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import useFetchAuth from '../lib/useFetchAuth'
-const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000'
+import React, {useState} from 'react';
+import useFetchAuth from '../lib/useFetchAuth';
+const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 function MyPosts() {
-    const [userData, setUserData] = useState('')
+    const [userData, setUserData] = useState('');
     const fetchAuthorized = useFetchAuth();
 
     function fetchData(){
         fetchAuthorized(`${ENDPOINT}/me`)
-        .then((json) => setUserData(JSON.stringify(json)))
+            .then((json) => setUserData(JSON.stringify(json)));
     }
 
 
@@ -17,7 +17,7 @@ function MyPosts() {
             <button onClick={fetchData}>Click to fetch user</button>
             <h1>Posts belong to: {userData}</h1>
         </div>
-    )
+    );
 }
 
-export default MyPosts
+export default MyPosts;

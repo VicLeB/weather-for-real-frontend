@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 export const Nav = styled.nav`
@@ -76,6 +76,6 @@ export const NavBtnLogout = styled.button`
         background: #fff;
         color: #010606;
     }
-`
+`;
 
 

@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     Nav,
     NavLink,
@@ -6,40 +7,43 @@ import {
     NavBtn,
     NavBtnLink,
     NavBtnLogout,
-    } from "../styles/Navigation.style"
+} from '../styles/Navigation.style';
+import { logout } from '../slices/UserSlice';
 
-function NavBar({loggedIn, setLoggedIn, setCurrentUser}) {
+function NavBar() {
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    const dispatch = useDispatch();
 
-    function handleLogout(){
+    function handleLogout() {
+        dispatch(logout());
         localStorage.removeItem('token');
-        setLoggedIn(false)
-        setCurrentUser(null)
     }
 
     return (
         <>
             <Nav>
-            <NavLink to='/'>
+                <NavLink to='/'>
                 Weather For Real
-            </NavLink>
-            {loggedIn? <>
-            <NavMenu>
-                <NavLink to='/my-posts'>
-                My Posts
                 </NavLink>
-            </NavMenu>
-            <NavBtn>
-                <NavBtnLogout onClick={handleLogout}>Logout</NavBtnLogout>
-            </NavBtn>
-            </>
-            :
-            <NavBtn>
-                <NavBtnLink to='/login'>Login</NavBtnLink>
-            </NavBtn>
-                }
+                {isLoggedIn? (
+                    <>
+                        <NavMenu>
+                            <NavLink to='/my-posts'>
+                        My Posts
+                            </NavLink>
+                        </NavMenu>
+                        <NavBtn>
+                            <NavBtnLogout onClick={handleLogout}>Logout</NavBtnLogout>
+                        </NavBtn>
+                    </>
+                ) : (
+                    <NavBtn>
+                        <NavBtnLink to='/login'>Login</NavBtnLink>
+                    </NavBtn>
+                )}
             </Nav>
         </>
-    )
+    );
 }
 
-export default NavBar
+export default NavBar;
