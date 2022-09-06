@@ -10,3 +10,7 @@
 #welcomeSearch{
     grid-column-start: 2;
 }
+
+#fiveDayForecast{
+    grid-column-start: 1;
+}

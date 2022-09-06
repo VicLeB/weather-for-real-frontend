@@ -1,35 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import useFetchAuth from '../lib/useFetchAuth';
+import React from 'react';
 
-function TodaysWeather() {
-    const userData = useSelector((state) => state.user);
-    const [ locationData, setLocationData ] = useState();
-    const [ fahrenheit, setFahrenheit ] = useState(true);
-    const loggedIn = userData.isLoggedIn;
-    const fetchWeather = useFetchAuth('/saved_user_weather_current');
+function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await fetchWeather();
-                const jsonData = await data.json();
-                setLocationData(jsonData);
-            } catch (e) {
-                console.error(e);
-            }
-        }
 
-        if(loggedIn){
-            fetchData();
-        }
-    }, [loggedIn]);
-
-    function handleDegreeType(){
-        setFahrenheit(!fahrenheit);
+    function handleTempClick(){
+        handleDegreeType(fahrenheit);
     }
-
-    console.log(locationData);
 
     if (locationData === undefined){
         return(<div>
@@ -40,8 +16,8 @@ function TodaysWeather() {
 
     return (
         <div>
-            <h2>Current Weather for {locationData.location.name},{locationData.location.region}</h2>
-            <button onClick={handleDegreeType}>{fahrenheit? '°F' : '°C'}</button>
+            <h4>Current Weather for {locationData.location.name} {locationData.location.region} {locationData.location.country}</h4>
+            <button onClick={handleTempClick}>{fahrenheit? '°F' : '°C'}</button>
             <figure>
                 <img src={locationData.current.condition.icon}/>
                 <figcaption>{locationData.current.condition.text}</figcaption>
