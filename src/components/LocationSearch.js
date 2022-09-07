@@ -1,6 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
-function LocationSearch() {
+function LocationSearch({handleLocationSearch }) {
+    const [locationSearchValue, setLocationSearchValue] = useState('');
+
     useEffect(() => {
         const autocomplete = new window.google.maps.places.Autocomplete(document.getElementById('google-autocomplete'), {
             types: ('regions'),
@@ -9,9 +11,11 @@ function LocationSearch() {
         });
 
         autocomplete.addListener('place_changed', () => {
-            console.log(autocomplete.getPlace().formatted_address);
+            const searchLocation = (autocomplete.getPlace().formatted_address);
+            handleLocationSearch(searchLocation);
+            setLocationSearchValue(searchLocation);
         });
-    }, []);
+    }, [locationSearchValue]);
 
     return (
         <div>

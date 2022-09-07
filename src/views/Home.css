@@ -1,0 +1,16 @@
+.homepage{
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+#todaysWeather{
+    grid-column-start: 1;
+}
+
+#welcomeSearch{
+    grid-column-start: 2;
+}
+
+#fiveDayForecast{
+    grid-column-start: 1;
+}
