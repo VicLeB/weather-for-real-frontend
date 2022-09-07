@@ -10,9 +10,16 @@ function Home() {
     const userData = useSelector((state) => state.user);
     const [ locationData, setLocationData ] = useState();
     const [ fahrenheit, setFahrenheit ] = useState(true);
+    const [latitude, setLatitude] = useState();
+    const [longitude, setLogitude] = useState();
     const loggedIn = userData.isLoggedIn;
     const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
     const fetchWeather = useFetchAuth('/saved_user_weather_current');
+
+    navigator.geolocation.getCurrentPosition((position) => {
+        setLatitude(position.coords.latitude);
+        setLogitude(position.coords.longitude);
+    });
 
     useEffect(() => {
         async function fetchData() {
@@ -29,10 +36,14 @@ function Home() {
             fetchData();
         }
 
-        if (!loggedIn) {
-            setLocationData();
+        if (loggedIn === false && latitude && longitude){
+            const geolocation = `${latitude} ${longitude}`;
+            fetch(`${ENDPOINT}/geolocation?location=${geolocation}`)
+                .then(res => res.json())
+                .then((geolocationData) => setLocationData(geolocationData));
         }
-    }, [loggedIn]);
+
+    }, [loggedIn, latitude, longitude]);
 
 
     function handleLocationSearch(searchLocation){
@@ -49,10 +60,10 @@ function Home() {
         <div className='homepage'>
             <h1>Search by your location</h1>
             <div id='todaysWeather'>
-                <TodaysWeather locationData= {locationData} handleDegreeType={handleDegreeType} fahrenheit={fahrenheit}/>
+                <TodaysWeather locationData={locationData} handleDegreeType={handleDegreeType} fahrenheit={fahrenheit}/>
             </div>
             <div id='fiveDayForecast'>
-                <ForecastContainer locationData = {locationData} fahrenheit={fahrenheit}/>
+                <ForecastContainer locationData={locationData} fahrenheit={fahrenheit}/>
             </div>
             <div id='welcomeSearch'>
                 <h1>Welcome!</h1>
