@@ -9,9 +9,9 @@ function ForecastContainer({locationData, fahrenheit}) {
         </div>
         );
     } else {
-        const fiveDayForecast= locationData.forecast.forecastday;
+        const fiveDayForecast= locationData?.forecast?.forecastday;
 
-        const forecastDayList = fiveDayForecast.map((forecastDay) => {
+        const forecastDayList = fiveDayForecast?.map((forecastDay) => {
             return <ForecastDay key={forecastDay.date} forecastDay = {forecastDay} fahrenheit={fahrenheit}/>;
         });
 
