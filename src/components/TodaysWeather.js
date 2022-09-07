@@ -9,7 +9,7 @@ function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
 
     if (locationData === undefined){
         return(<div>
-            <h1>Search for location</h1>
+            <h1>Search for Current weather in your area</h1>
         </div>
         );
     }
