@@ -21,9 +21,6 @@ function Home() {
         setLogitude(position.coords.longitude);
     });
 
-    console.log(latitude);
-    console.log(longitude);
-
     useEffect(() => {
         async function fetchData() {
             try {
@@ -41,16 +38,12 @@ function Home() {
 
         if (loggedIn === false && latitude && longitude){
             const geolocation = `${latitude} ${longitude}`;
-            console.log({geolocation});
             fetch(`${ENDPOINT}/geolocation?location=${geolocation}`)
                 .then(res => res.json())
                 .then((geolocationData) => setLocationData(geolocationData));
         }
 
     }, [loggedIn, latitude, longitude]);
-
-    console.log(locationData);
-    console.log(loggedIn);
 
 
     function handleLocationSearch(searchLocation){
