@@ -1,5 +1,6 @@
 import React from 'react';
 import ForecastDay from './ForecastDay';
+import styled from 'styled-components';
 
 function ForecastContainer({locationData, fahrenheit}) {
 
@@ -18,10 +19,17 @@ function ForecastContainer({locationData, fahrenheit}) {
         return (
             <div>
                 <h3>Your five day forecast</h3>
-                {forecastDayList}
+                <StyledForecastWrapper>
+                    {forecastDayList}
+                </StyledForecastWrapper>
             </div>
         );
     }
 }
 
 export default ForecastContainer;
+
+const StyledForecastWrapper = styled.div`
+    display: flex;
+    justify-content: space-around;
+`;

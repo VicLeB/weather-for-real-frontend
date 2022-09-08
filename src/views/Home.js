@@ -3,6 +3,7 @@ import LocationSearch from '../components/LocationSearch';
 import TodaysWeather from '../components/TodaysWeather';
 import ForecastContainer from '../components/ForecastContainer';
 import './Home.css';
+import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import useFetchAuth from '../lib/useFetchAuth';
 
@@ -57,20 +58,45 @@ function Home() {
     }
 
     return (
-        <div className='homepage'>
-            <h1>Search by your location</h1>
-            <div id='todaysWeather'>
-                <TodaysWeather locationData={locationData} handleDegreeType={handleDegreeType} fahrenheit={fahrenheit}/>
-            </div>
-            <div id='fiveDayForecast'>
-                <ForecastContainer locationData={locationData} fahrenheit={fahrenheit}/>
-            </div>
-            <div id='welcomeSearch'>
-                <h1>Welcome!</h1>
-                <LocationSearch handleLocationSearch={handleLocationSearch}/>
-            </div>
-        </div>
+        <HomeViewWrapper>
+            <LeftHomePage>
+                <div id='todaysWeather'>
+                    <TodaysWeather locationData={locationData} handleDegreeType={handleDegreeType} fahrenheit={fahrenheit}/>
+                </div>
+                <div id='fiveDayForecast'>
+                    <ForecastContainer locationData={locationData} fahrenheit={fahrenheit}/>
+                </div>
+            </LeftHomePage>
+            <RightHomePage>
+                <div id='searchPrompt'>
+                    <h1>Search by your location</h1>
+                </div>
+                <div id='welcomeSearch'>
+                    <h1>Welcome!</h1>
+                    <LocationSearch handleLocationSearch={handleLocationSearch}/>
+                </div>
+            </RightHomePage>
+        </HomeViewWrapper>
     );
 }
 
 export default Home;
+
+const HomeViewWrapper = styled.div`
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+`;
+
+const LeftHomePage = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+`;
+
+const RightHomePage = styled.div`
+display: flex;
+flex-direction: column;
+align-content: center;
+width: 100%;
+`;
