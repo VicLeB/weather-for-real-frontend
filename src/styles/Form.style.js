@@ -45,5 +45,17 @@ export const StyledButton = styled.button `
     padding: 0 20px;
     cursor: pointer;
     box-sizing: border-box;
+`;
+
+export const StyledSelectBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-bottom: 5%;
+`;
+
+export const FileUploadBox = styled.div`
+    display: block;
+    padding: 2%;
 
 `;
