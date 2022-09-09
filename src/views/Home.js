@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import LocationSearch from '../components/LocationSearch';
 import TodaysWeather from '../components/TodaysWeather';
 import ForecastContainer from '../components/ForecastContainer';
+import PostFeed from '../components/PostFeed';
 import './Home.css';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ function Home() {
     const loggedIn = userData.isLoggedIn;
     const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
     const fetchWeather = useFetchAuth('/saved_user_weather_current');
+
 
     navigator.geolocation.getCurrentPosition((position) => {
         setLatitude(position.coords.latitude);
@@ -75,6 +77,9 @@ function Home() {
                     <h1>Welcome!</h1>
                     <LocationSearch handleLocationSearch={handleLocationSearch}/>
                 </div>
+                <div>
+                    <PostFeed loggedIn={loggedIn}/>
+                </div>
             </RightHomePage>
         </HomeViewWrapper>
     );
@@ -95,8 +100,8 @@ const LeftHomePage = styled.div`
 `;
 
 const RightHomePage = styled.div`
-display: flex;
-flex-direction: column;
-align-content: center;
-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
 `;

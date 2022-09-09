@@ -7,6 +7,7 @@ import Home from './views/Home';
 import Login from './views/Login';
 import NavBar from './components/NavBar';
 import MyPosts from './views/MyPosts';
+import CreateNewPostForm from './components/CreateNewPostForm';
 
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/" element={<Home />}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/my-posts" element={<MyPosts/>}/>
+                <Route path="/create-post" element={<CreateNewPostForm/>}/>
                 <Route
                     path="*"
                     element={<Navigate to="/" replace />}
