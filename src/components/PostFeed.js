@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import Post from './Post';
 
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
@@ -18,13 +19,24 @@ function PostFeed({loggedIn}) {
     });
 
 
+
     return (
         <div>
-            <h3>Future home of post feed</h3>
+            <h3>See weather for real from our users</h3>
             {loggedIn?<button><Link to= '/create-post'>Create Post</Link></button>:null}
-            {postFeed}
+            <PostFeedContainer>
+                {postFeed}
+            </PostFeedContainer>
         </div>
     );
 }
 
 export default PostFeed;
+
+const PostFeedContainer= styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3%;
+    overflow: scroll;
+`;

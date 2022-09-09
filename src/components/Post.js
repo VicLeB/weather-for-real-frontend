@@ -6,11 +6,16 @@ const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-re
 function Post({postData}) {
     return (
         <PostContainer>
-            <h3>{postData.title}</h3>
-            <h5>user: {postData.user.username}</h5>
+            <PostTop>
+                <h3>{postData.title}</h3>
+                <h4>{postData.location}</h4>
+            </PostTop>
+            <UserName>Submitted by: {postData.user.username}</UserName>
             <ImageWrapper>
                 <Image src={`${ENDPOINT}/${postData.image.url}`}/>
             </ImageWrapper>
+            <h4>{postData.caption}</h4>
+            <h5>{postData.date}</h5>
         </PostContainer>
     );
 }
@@ -21,7 +26,11 @@ const PostContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-content: center;
-    width: 70%;
+    max-height: 800px;
+    max-width: 400px;
+    border: 1px solid black;
+    border-radius: 7px;
+    margin-bottom: 3%;
 `;
 
 const ImageWrapper = styled.div`
@@ -38,5 +47,18 @@ const Image = styled.img`
     height: 100%;
     object-fit: cover;
     object-position: 50% 50%;
+`;
+
+const PostTop = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 0;
+`;
+
+const UserName = styled.h5`
+    text-align: left;
+    margin: 0;
+    padding-left: 5px;
 `;
 

@@ -16,14 +16,12 @@ function CreateNewPostForm() {
     const [imageFile, setImageFile]= useState();
     const [city, setCity]= useState('');
     const [stateProvince, setStateProvince] = useState('');
-    const [country, setCountry]= useState('');
+    const [country, setCountry]= useState('USA');
     const today = new Date();
     const date = today.getMonth()+'-'+(today.getDay())+'-'+(today.getFullYear());
     const time = (today.getHours() > 12? today.getHours() - 12: today.getHours())+':'+today.getMinutes();
     const amPm = today.getHours() > 12? 'PM' : 'AM';
     const dateTime = date+' '+time+' '+amPm;
-
-    console.log(dateTime);
 
 
 
@@ -44,6 +42,7 @@ function CreateNewPostForm() {
         formData.append('location', location);
         formData.append('user_id', userData.id);
         formData.append('date', dateTime);
+
 
 
         fetch(`${ENDPOINT}/posts`,{
@@ -83,14 +82,14 @@ function CreateNewPostForm() {
                         <label>
                             State/Province
                             <select type='text' onChange={(e)=> setStateProvince(e.target.value)}>
-                                {stateOrProvince.map((stateProv)=> <option key ={stateProv} value={stateProvince}>{stateProv}</option>)}
+                                {stateOrProvince.map((stateProv)=> <option key ={stateProv} value={stateProv}>{stateProv}</option>)}
                             </select>
                         </label>
                         <label>
                             Country
-                            <select type='text' onChange={(e)=> setCountry(e.target.value)}>
-                                <option value={country}>USA</option>
-                                <option value={country}>Canada</option>
+                            <select type='text' value={country} onChange={(e)=> setCountry(e.target.value)}>
+                                <option value={'USA'}>USA</option>
+                                <option value={'CANADA'}>Canada</option>
                             </select>
                         </label>
                     </StyledSelectBox>
