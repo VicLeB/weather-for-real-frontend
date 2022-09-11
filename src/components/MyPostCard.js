@@ -1,28 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { useSelector } from 'react-redux';
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
-function Post({postData}) {
+
+function MyPostCard({post}) {
+    const {username} = useSelector((state) => state.user);
     return (
         <PostContainer>
             <PostTop>
-                <h3>{postData.title}</h3>
-                <h4>{postData.location}</h4>
+                <h3>{post.title}</h3>
+                <h4>{post.location}</h4>
             </PostTop>
-            <UserName>Submitted by: {postData.user.username}</UserName>
+            <UserName>Submitted by: {username}</UserName>
             <ImageWrapper>
-                <Image src={`${ENDPOINT}/${postData.image.url}`}/>
+                <Image src={`${ENDPOINT}/${post.image.url}`}/>
             </ImageWrapper>
-            <h4>{postData.caption}</h4>
-            <h5>{postData.date}</h5>
+            <h4>{post.caption}</h4>
+            <h5>{post.date}</h5>
         </PostContainer>
     );
 }
 
-
-
-export default Post;
+export default MyPostCard;
 
 const PostContainer = styled.div`
     display: flex;
@@ -64,4 +64,3 @@ const UserName = styled.h5`
     margin: 0;
     padding-left: 5px;
 `;
-

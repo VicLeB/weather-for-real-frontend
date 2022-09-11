@@ -1,21 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import useFetchAuth from '../lib/useFetchAuth';
+import { useSelector } from 'react-redux';
+import MyPostCard from '../components/MyPostCard';
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 function MyPosts() {
-    const [userData, setUserData] = useState('');
-    const fetchAuthorized = useFetchAuth();
+    const {isLoggedIn, id, username} = useSelector((state) => state.user);
+    const [userPosts, setUserPosts] = useState();
+    const fetchAuthorized = useFetchAuth('/posts');
 
-    function fetchData(){
-        fetchAuthorized(`${ENDPOINT}/me`)
-            .then((json) => setUserData(JSON.stringify(json)));
+    useEffect(()=>{
+        if (isLoggedIn) {
+            fetchAuthorized()
+                .then((res) => res.json())
+                .then((data) => {
+                    const myPosts = data.filter((post)=> post.user.username === username);
+                    setUserPosts(myPosts);
+                });
+        }
+    }, [isLoggedIn]);
+
+    if(userPosts === undefined){
+        return(<div>
+            <h3>Loading...</h3>
+        </div>
+        );
     }
-
+    const myPostsList = userPosts.map((post)=>{
+        return <MyPostCard key={post.id} post={post}/>;
+    });
 
     return (
         <div>
-            <button onClick={fetchData}>Click to fetch user</button>
-            <h1>Posts belong to: {userData}</h1>
+            <h1>{username}&apos;s Post History</h1>
+            {myPostsList}
         </div>
     );
 }
