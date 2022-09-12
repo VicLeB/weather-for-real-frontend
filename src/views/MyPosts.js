@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import useFetchAuth from '../lib/useFetchAuth';
+import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import MyPostCard from '../components/MyPostCard';
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
@@ -27,15 +28,35 @@ function MyPosts() {
         );
     }
     const myPostsList = userPosts.map((post)=>{
-        return <MyPostCard key={post.id} post={post}/>;
+        return <MyPostCard key={post.id} post={post} handleEditPost={handleEditPost}/>;
     });
 
+    function handleEditPost(editedPost){
+        setUserPosts(userPosts.map((post)=>{
+            if(post.id === editedPost.id){
+                return editedPost;
+            } else {
+                return post;
+            }
+        }));
+    }
+
     return (
-        <div>
+        <>
             <h1>{username}&apos;s Post History</h1>
-            {myPostsList}
-        </div>
+            <MyPostsWrapper>
+                {myPostsList}
+            </MyPostsWrapper>
+        </>
     );
 }
 
 export default MyPosts;
+
+const MyPostsWrapper= styled.div`
+    display: flex;
+    flex-direction: row;
+    overflow-wrap: normal;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+`;
