@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 
-function MyPostCard({post, handleEditPost}) {
+function MyPostCard({post, handleEditPost, handleDeletePost}) {
     const {username} = useSelector((state) => state.user);
     const [editPost, setEditPost] = useState(false);
     const [title, setTitle] = useState('');
@@ -41,7 +41,12 @@ function MyPostCard({post, handleEditPost}) {
     }
 
     function handlePostDelete(){
-        console.log('bye');
+        fetch(`${ENDPOINT}/posts/${post.id}`,{
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then(() => handleDeletePost(post.id));
     }
 
 

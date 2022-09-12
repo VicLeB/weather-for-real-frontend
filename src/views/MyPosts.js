@@ -28,7 +28,7 @@ function MyPosts() {
         );
     }
     const myPostsList = userPosts.map((post)=>{
-        return <MyPostCard key={post.id} post={post} handleEditPost={handleEditPost}/>;
+        return <MyPostCard key={post.id} post={post} handleDeletePost = {handleDeletePost} handleEditPost={handleEditPost}/>;
     });
 
     function handleEditPost(editedPost){
@@ -39,6 +39,10 @@ function MyPosts() {
                 return post;
             }
         }));
+    }
+
+    function handleDeletePost(deletedPostId){
+        setUserPosts(userPosts.filter((post)=> (post.id !== deletedPostId)));
     }
 
     return (

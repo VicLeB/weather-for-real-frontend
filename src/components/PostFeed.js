@@ -8,10 +8,13 @@ const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-re
 function PostFeed({loggedIn}) {
     const [postFeedData, setPostFeedData] = useState();
 
+
     useEffect(()=>{
         fetch(`${ENDPOINT}/posts`)
             .then(res => res.json())
-            .then((data)=> setPostFeedData(data));
+            .then((data)=> {
+                setPostFeedData(data);
+            });
     },[]);
 
     const postFeed = postFeedData?.map((postData)=>{

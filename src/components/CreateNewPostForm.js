@@ -55,7 +55,9 @@ function CreateNewPostForm() {
             },
             body: formData
         })
-            .then(navigate('/'))
+            .then(() => {
+                setTimeout(() => navigate('/'), 100);
+            })
             .catch(error=>console.log(error));
     }
 
