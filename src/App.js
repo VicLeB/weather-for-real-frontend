@@ -8,12 +8,15 @@ import Login from './views/Login';
 import NavBar from './components/NavBar';
 import MyPosts from './views/MyPosts';
 import CreateNewPostForm from './components/CreateNewPostForm';
+import useScriptLoad from './lib/useScriptLoad';
 
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 
 function App() {
     const dispatch = useDispatch();
+
+    const [isScriptLoaded] = useScriptLoad();
 
     useEffect(() => {
         const token = localStorage.token;
@@ -32,6 +35,10 @@ function App() {
                 });
         }
     }, []);
+
+    if (!isScriptLoaded) {
+        return null;
+    }
 
     return (
         <div className="App">
