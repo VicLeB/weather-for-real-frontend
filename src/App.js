@@ -28,8 +28,8 @@ function App() {
                 body: JSON.stringify({token: token})
             }).then(resp => resp.json())
                 .then(user => {
-                    dispatch(setUser(user)
-                    );});
+                    dispatch(setUser(user));
+                });
         }
     }, []);
 

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
     StyledForm,
     StyledInput,
@@ -22,6 +23,7 @@ function CreateNewPostForm() {
     const time = (today.getHours() > 12? today.getHours() - 12: today.getHours())+':'+today.getMinutes();
     const amPm = today.getHours() > 12? 'PM' : 'AM';
     const dateTime = date+' '+time+' '+amPm;
+    const navigate = useNavigate();
 
 
 
@@ -52,7 +54,11 @@ function CreateNewPostForm() {
                 Accepts: 'application/json'
             },
             body: formData
-        }).catch(error=>console.log(error));
+        })
+            .then(() => {
+                setTimeout(() => navigate('/'), 100);
+            })
+            .catch(error=>console.log(error));
     }
 
     return (

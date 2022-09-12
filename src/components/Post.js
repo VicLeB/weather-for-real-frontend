@@ -20,6 +20,8 @@ function Post({postData}) {
     );
 }
 
+
+
 export default Post;
 
 const PostContainer = styled.div`
@@ -28,6 +30,7 @@ const PostContainer = styled.div`
     align-content: center;
     max-height: 800px;
     max-width: 400px;
+    min-width: 400px;
     border: 1px solid black;
     border-radius: 7px;
     margin-bottom: 3%;
