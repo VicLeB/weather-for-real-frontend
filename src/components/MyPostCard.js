@@ -5,10 +5,11 @@ const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-re
 
 
 function MyPostCard({post, handleEditPost, handleDeletePost}) {
-    const {username} = useSelector((state) => state.user);
+    const userData = useSelector((state) => state.user);
     const [editPost, setEditPost] = useState(false);
     const [title, setTitle] = useState('');
     const [caption, setCaption] = useState('');
+    const [writeComment, setWriteComment] = useState(false);
     const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 
@@ -65,7 +66,7 @@ function MyPostCard({post, handleEditPost, handleDeletePost}) {
                     <ImageWrapper>
                         <Image src={`${ENDPOINT}/${post.image.url}`}/>
                     </ImageWrapper>
-                    <UserName>Submitted by: {username}</UserName>
+                    <UserName>Submitted by: {userData.username}</UserName>
                     <input type='text' placeholder={post.caption} value={caption} onChange={(e)=> setCaption(e.target.value)}/>
                     <SaveButtonWrapper>
                         <EditDeleteButton onClick={handleSaveChanges}>Save Changes</EditDeleteButton>
@@ -81,7 +82,7 @@ function MyPostCard({post, handleEditPost, handleDeletePost}) {
                     <ImageWrapper>
                         <Image src={`${ENDPOINT}/${post.image.url}`}/>
                     </ImageWrapper>
-                    <UserName>Submitted by: {username}</UserName>
+                    <UserName>Submitted by: {userData.username}</UserName>
                     <h4>{post.caption}</h4>
                     <h5>{post.date}</h5>
                 </>

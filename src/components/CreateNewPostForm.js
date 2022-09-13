@@ -45,8 +45,6 @@ function CreateNewPostForm() {
         formData.append('user_id', userData.id);
         formData.append('date', dateTime);
 
-
-
         fetch(`${ENDPOINT}/posts`,{
             method: 'POST',
             headers:{
