@@ -1,9 +1,62 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import Comment from './Comment';
 
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 function Post({postData}) {
+    const [writeComment, setWriteComment] = useState(false);
+    const [comment, setComment] = useState('');
+    const userData = useSelector((state) => state.user);
+    const [postComments, setPostComments] = useState(postData.comments);
+
+    const newCommentData ={
+        content: comment,
+        user_id: userData.id,
+        post_id: postData.id
+    };
+
+    function handleAddCommentClick(){
+        setWriteComment(!writeComment);
+    }
+
+    function handleAddComment(e){
+        e.preventDefault();
+        fetch(`${ENDPOINT}/comments`,{
+            method:'POST',
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+                Accepts: 'application/json'
+            },
+            body: JSON.stringify(newCommentData)
+        }).then((res)=>{
+            if(res.ok){
+                res.json().then((addedComment)=>{
+                    handleAllCommentsList(addedComment);
+                    setWriteComment(!writeComment);
+                });
+            }else{
+                res.json().then(console.error);
+            }
+        });
+    }
+
+
+    function handleCommentDisplay(deletedCommentId){
+        setPostComments(postComments.filter((comment)=>(comment.id !== deletedCommentId)));
+    }
+
+    function handleAllCommentsList(addedComment){
+        setPostComments([...postComments, addedComment]);
+    }
+
+
+    const commentsList = postComments.map((comment)=> {
+        return <Comment key={comment.id} comment={comment} handleCommentDisplay={handleCommentDisplay}/>;
+    });
+
     return (
         <PostContainer>
             <PostTop>
@@ -15,6 +68,14 @@ function Post({postData}) {
                 <Image src={`${ENDPOINT}/${postData.image.url}`}/>
             </ImageWrapper>
             <h4>{postData.caption}</h4>
+            <button onClick={handleAddCommentClick}>Add a comment</button>
+            {writeComment? <>
+                <form onSubmit={handleAddComment}>
+                    <textarea value={comment} onChange={(e)=> setComment(e.target.value)} placeholder={userData.isLoggedIn?'Add a comment...' : 'Login to add a comment...'}/>
+                    {userData.isLoggedIn? <button type='submit'>Post</button>: null}
+                </form>
+            </>:null}
+            {commentsList}
             <h5>{postData.date}</h5>
         </PostContainer>
     );
