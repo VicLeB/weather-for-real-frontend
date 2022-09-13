@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../slices/UserSlice';
 import {
     StyledForm,
     StyledInput,
@@ -14,6 +16,7 @@ function SignUpForm({setShowLogin}) {
     const [errors, setErrors] = useState([]);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function handleCreateUser(e){
         e.preventDefault();
@@ -51,6 +54,7 @@ function SignUpForm({setShowLogin}) {
                         }).then(res=> res.json())
                             .then(json => {
                                 localStorage.setItem('token', json.jwt);
+                                dispatch(setUser(json.user));
                                 navigate('/');
                             });
                     });
@@ -59,7 +63,7 @@ function SignUpForm({setShowLogin}) {
             }
         });
     }
-    console.log(errors);
+
 
     return (
         <>
