@@ -13,7 +13,7 @@ const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-re
 function LoginForm({setShowLogin}) {
     const [username, setUsername]= useState('');
     const [password, setPassword]= useState('');
-    const [errors]= useState([]);
+    const [errors, setErrors]= useState([]);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -32,13 +32,19 @@ function LoginForm({setShowLogin}) {
                     password,
                 }
             })
-        }).then(res=> res.json())
-            .then(json => {
-                localStorage.setItem('token', json.jwt);
-                dispatch(setUser(json.user));
-                navigate('/');
-            });
+        }).then((res)=> {
+            if(res.ok){
+                res.json().then(json => {
+                    localStorage.setItem('token', json.jwt);
+                    dispatch(setUser(json.user));
+                    navigate('/');
+                });
+            }else{
+                res.json().then((res)=> setErrors(res));
+            }
+        });
     }
+    console.log(errors);
 
     return (
         <>
@@ -52,11 +58,11 @@ function LoginForm({setShowLogin}) {
                     Password
                     <StyledInput type='password' value={password} onChange= {(e)=> setPassword(e.target.value)}/>
                 </label>
+                {errors.message?<div>{errors.message}</div>:null}
                 <StyledButton type='submit' >Login</StyledButton>
                 <p>Don&apos;t have and account? Create one now: <StyledButton onClick={()=> setShowLogin(false)}>Sign up</StyledButton>
                 </p>
             </StyledForm>
-            {errors? <div>{errors}</div>:<div>Login Success!</div>}
         </>
     );
 }
