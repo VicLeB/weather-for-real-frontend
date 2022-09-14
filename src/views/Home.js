@@ -12,17 +12,22 @@ function Home() {
     const userData = useSelector((state) => state.user);
     const [ locationData, setLocationData ] = useState();
     const [ fahrenheit, setFahrenheit ] = useState(true);
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLogitude] = useState();
     const loggedIn = userData.isLoggedIn;
     const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
     const fetchWeather = useFetchAuth('/saved_user_weather_current');
 
 
-    navigator.geolocation.getCurrentPosition((position) => {
-        setLatitude(position.coords.latitude);
-        setLogitude(position.coords.longitude);
-    });
+    useEffect(() => {
+        if (!loggedIn) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const {latitude, longitude} = position.coords;
+                const geolocation = `${latitude} ${longitude}`;
+                fetch(`${ENDPOINT}/geolocation?location=${geolocation}`)
+                    .then(res => res.json())
+                    .then((geolocationData) => setLocationData(geolocationData));
+            });
+        }
+    }, [loggedIn]);
 
     useEffect(() => {
         async function fetchData() {
@@ -38,15 +43,7 @@ function Home() {
         if (loggedIn){
             fetchData();
         }
-
-        if (loggedIn === false && latitude && longitude){
-            const geolocation = `${latitude} ${longitude}`;
-            fetch(`${ENDPOINT}/geolocation?location=${geolocation}`)
-                .then(res => res.json())
-                .then((geolocationData) => setLocationData(geolocationData));
-        }
-
-    }, [loggedIn, latitude, longitude]);
+    }, [loggedIn]);
 
 
     function handleLocationSearch(searchLocation){
@@ -77,9 +74,11 @@ function Home() {
                     <div id='welcomeSearch'>
                         <LocationSearch handleLocationSearch={handleLocationSearch}/>
                     </div>
-                    <div>
-                        <PostFeed loggedIn={loggedIn}/>
-                    </div>
+                    {locationData ?
+                        <div>
+                            <PostFeed locationData ={locationData} loggedIn={loggedIn}/>
+                        </div> : null
+                    }
                 </FeedPosts>
             </RightHomePage>
         </HomeViewWrapper>

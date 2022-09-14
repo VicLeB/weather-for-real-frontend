@@ -5,17 +5,18 @@ import Post from './Post';
 
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
-function PostFeed({loggedIn}) {
+function PostFeed({loggedIn, locationData}) {
     const [postFeedData, setPostFeedData] = useState();
+    const location = locationData.location;
 
 
     useEffect(()=>{
-        fetch(`${ENDPOINT}/posts`)
+        fetch(`${ENDPOINT}/filtered_by_location/${location.name}`)
             .then(res => res.json())
             .then((data)=> {
                 setPostFeedData(data);
             });
-    },[]);
+    },[location]);
 
     const postFeed = postFeedData?.map((postData)=>{
         return <Post key={postData.id} postData={postData}/>;

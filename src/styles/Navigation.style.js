@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { primaryColor,  } from './index.style';
 
 
 export const Nav = styled.nav`
-    background: #000;
+    background: ${primaryColor};
     height: 80px;
     display: flex;
     justify-content: space-between;
@@ -17,6 +18,7 @@ export const Nav = styled.nav`
 export const NavLink = styled(Link)`
     color: #fff;
     display: flex;
+    font-size: x-large;
     align-items: center;
     text-decoration: none;
     padding:0 1vw;
@@ -24,7 +26,7 @@ export const NavLink = styled(Link)`
     white-space: nowrap;
     cursor: pointer;
     &:hover {
-        color: yellow;
+        color: #055ca4;
     }
 `;
 

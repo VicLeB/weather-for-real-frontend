@@ -95,6 +95,7 @@ const PostContainer = styled.div`
     border: 1px solid black;
     border-radius: 7px;
     margin-bottom: 3%;
+    background-color: #f3f3fc;
 `;
 
 const ImageWrapper = styled.div`
