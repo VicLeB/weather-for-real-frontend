@@ -69,7 +69,7 @@ function Home() {
             <RightHomePage>
                 <FeedPosts>
                     <div id='searchPrompt'>
-                        <h1>Search by your location</h1>
+                        <h2>What&apos;s the Weather like in...</h2>
                     </div>
                     <div id='welcomeSearch'>
                         <LocationSearch handleLocationSearch={handleLocationSearch}/>

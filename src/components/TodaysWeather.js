@@ -26,26 +26,63 @@ function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
         <div>
             <h4>Current Weather for {location?.name} {location?.region} {location?.country}</h4>
             <InputWrapper>
-                <p>Switch temperature to {checked? '°C': '°F'}</p>
+                <p>Click for {checked? '°C': '°F'}</p>
                 <Input type='checkbox' checked={checked} onChange={handleTempClick}/>
                 <Switch/>
             </InputWrapper>
-            <figure>
-                <img src={current?.condition.icon}/>
-                <figcaption>{current?.condition.text}</figcaption>
-            </figure>
-            <p>{fahrenheit? `${current?.temp_f}°F` : `${current?.temp_c}°C`}</p>
-            <p>Feels like: {fahrenheit? `${current?.feelslike_f}°F` : `${current?.feelslike_c}°C`}</p>
-            <p>Wind: {fahrenheit? `${current?.wind_mph} mph`:`${current?.wind_kph} kph`}</p>
+            <TodaysWeatherWrapper>
+                <FocusedDetails>
+                    <figure>
+                        <img src={current?.condition.icon}/>
+                        <figcaption>{current?.condition.text}</figcaption>
+                    </figure>
+                    <CurrentTemp>{fahrenheit? `${current?.temp_f}°F` : `${current?.temp_c}°C`}</CurrentTemp>
+                </FocusedDetails>
+                <TodaysDetails>
+                    <p>Feels like: {fahrenheit? `${current?.feelslike_f}°F` : `${current?.feelslike_c}°C`}</p>
+                    <p>Wind: {fahrenheit? `${current?.wind_mph} mph`:`${current?.wind_kph} kph`}</p>
+                </TodaysDetails>
+            </TodaysWeatherWrapper>
         </div>
     );
 }
 
 export default TodaysWeather;
 
+const TodaysWeatherWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const FocusedDetails = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+const CurrentTemp = styled.h2`
+    font-size: 45px;
+    font-weight: normal;
+
+`;
+
+
+const TodaysDetails = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30%;
+`;
+
 const InputWrapper = styled.label`
     position: relative;
-
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 20%;
+    padding-left: 10px;
 `;
 
 const Input = styled.input`
@@ -73,9 +110,10 @@ const Input = styled.input`
 const Switch = styled.span`
     display: flex;
     position: relative;
+    align-self: center;
     cursor: pointer;
-    width: 50px;
-    height: 25px;
+    width: 45px;
+    height: 20px;
     background: #bfbfbf;
     border-radius: 100px;
     transition: background-color 0.2s, box-shadow 0.2s;
@@ -83,8 +121,8 @@ const Switch = styled.span`
     &:before{
         content: '';
         position: absolute;
-        width: 21px;
-        height: 21px;
+        width: 16px;
+        height: 16px;
         border-radius: 21px;
         top: 2px;
         left: 2px;

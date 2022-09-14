@@ -20,8 +20,7 @@ function LocationSearch({handleLocationSearch }) {
 
     return (
         <div>
-            <h1>Location Search Bar</h1>
-            <input id="google-autocomplete" type="text" placeholder='Search'/>
+            <input id="google-autocomplete" size='50' type="text" placeholder='Search by city/town...'/>
         </div>
     );
 }

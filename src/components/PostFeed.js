@@ -42,5 +42,12 @@ const PostFeedContainer= styled.div`
     flex-direction: column;
     align-items: center;
     margin-top: 3%;
-    overflow: scroll;
+    overflow-y: scroll;
+    height: 100vh;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
 `;
