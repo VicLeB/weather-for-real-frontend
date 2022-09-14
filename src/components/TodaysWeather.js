@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import {BsWind} from 'react-icons/bs';
 
 function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
     const [checked, setChecked]= useState(true);
@@ -25,12 +26,12 @@ function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
     return (
         <div>
             <h4>Current Weather for {location?.name} {location?.region} {location?.country}</h4>
-            <InputWrapper>
-                <p>Click for {checked? '°C': '°F'}</p>
-                <Input type='checkbox' checked={checked} onChange={handleTempClick}/>
-                <Switch/>
-            </InputWrapper>
             <TodaysWeatherWrapper>
+                <InputWrapper>
+                    <p>Click for {checked? '°C': '°F'}</p>
+                    <Input type='checkbox' checked={checked} onChange={handleTempClick}/>
+                    <Switch/>
+                </InputWrapper>
                 <FocusedDetails>
                     <figure>
                         <img src={current?.condition.icon}/>
@@ -39,8 +40,8 @@ function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
                     <CurrentTemp>{fahrenheit? `${current?.temp_f}°F` : `${current?.temp_c}°C`}</CurrentTemp>
                 </FocusedDetails>
                 <TodaysDetails>
-                    <p>Feels like: {fahrenheit? `${current?.feelslike_f}°F` : `${current?.feelslike_c}°C`}</p>
-                    <p>Wind: {fahrenheit? `${current?.wind_mph} mph`:`${current?.wind_kph} kph`}</p>
+                    <p>Feels like {fahrenheit? `${current?.feelslike_f}°F` : `${current?.feelslike_c}°C`}</p>
+                    <p><BsWind/> {fahrenheit? `${current?.wind_mph} mph`:`${current?.wind_kph} kph`}</p>
                 </TodaysDetails>
             </TodaysWeatherWrapper>
         </div>
@@ -67,7 +68,6 @@ const CurrentTemp = styled.h2`
     font-weight: normal;
 
 `;
-
 
 const TodaysDetails = styled.div`
     display: flex;
