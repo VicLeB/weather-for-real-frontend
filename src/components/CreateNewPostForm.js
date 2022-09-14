@@ -24,6 +24,7 @@ function CreateNewPostForm() {
     const amPm = today.getHours() > 12? 'PM' : 'AM';
     const dateTime = date+' '+time+' '+amPm;
     const navigate = useNavigate();
+    console.log(date);
 
 
 

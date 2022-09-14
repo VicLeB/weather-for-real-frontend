@@ -27,11 +27,6 @@ function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
         <div>
             <h4>Current Weather for {location?.name} {location?.region} {location?.country}</h4>
             <TodaysWeatherWrapper>
-                <InputWrapper>
-                    <p>Click for {checked? '°C': '°F'}</p>
-                    <Input type='checkbox' checked={checked} onChange={handleTempClick}/>
-                    <Switch/>
-                </InputWrapper>
                 <FocusedDetails>
                     <figure>
                         <img src={current?.condition.icon}/>
@@ -40,9 +35,14 @@ function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
                     <CurrentTemp>{fahrenheit? `${current?.temp_f}°F` : `${current?.temp_c}°C`}</CurrentTemp>
                 </FocusedDetails>
                 <TodaysDetails>
-                    <p>Feels like {fahrenheit? `${current?.feelslike_f}°F` : `${current?.feelslike_c}°C`}</p>
+                    <h5>Feels like {fahrenheit? `${current?.feelslike_f}°F` : `${current?.feelslike_c}°C`}</h5>
                     <p><BsWind/> {fahrenheit? `${current?.wind_mph} mph`:`${current?.wind_kph} kph`}</p>
                 </TodaysDetails>
+                <InputWrapper>
+                    <p>Click for {checked? '°C': '°F'}</p>
+                    <Input type='checkbox' checked={checked} onChange={handleTempClick}/>
+                    <Switch/>
+                </InputWrapper>
             </TodaysWeatherWrapper>
         </div>
     );
@@ -55,6 +55,7 @@ const TodaysWeatherWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 40px;
 `;
 
 const FocusedDetails = styled.div`
@@ -82,7 +83,6 @@ const InputWrapper = styled.label`
     flex-direction: row;
     justify-content: space-between;
     width: 20%;
-    padding-left: 10px;
 `;
 
 const Input = styled.input`

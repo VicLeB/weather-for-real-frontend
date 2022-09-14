@@ -27,7 +27,9 @@ function PostFeed({loggedIn, locationData}) {
     return (
         <div>
             <h3>See weather for real from our users</h3>
-            {loggedIn?<button><Link to= '/create-post'>Create Post</Link></button>:null}
+            <ButtonBox>
+                {loggedIn?<CreatePostButton to= '/create-post'>Create Post</CreatePostButton>:null}
+            </ButtonBox>
             <PostFeedContainer>
                 {postFeed}
             </PostFeedContainer>
@@ -36,6 +38,31 @@ function PostFeed({loggedIn, locationData}) {
 }
 
 export default PostFeed;
+
+const ButtonBox= styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+`;
+
+const CreatePostButton= styled(Link)`
+    border-radius: 4px;
+    background: #256ce1;
+    padding: 10px 22px;
+    color: #fff;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    font-size: 14px;
+
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background: #fff;
+        color: #010606;
+    }
+`;
 
 const PostFeedContainer= styled.div`
     display: flex;

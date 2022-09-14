@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import {TiDeleteOutline} from 'react-icons/ti';
 
 function Comment({comment, handleCommentDisplay}) {
     const {username} = useSelector((state) => state.user);
@@ -28,12 +30,36 @@ function Comment({comment, handleCommentDisplay}) {
     }
 
     return (
-        <div>
-            <h6>{commentDetails.user.username}</h6>
-            <p>{commentDetails.content}</p>
-            {(username === commentDetails.user.username)?<button onClick={handleDeleteComment}>x</button> : null}
-        </div>
+        <CommentWrapper>
+            <CommentUsername>{commentDetails.user.username}</CommentUsername>
+            <CommentContent>{commentDetails.content}</CommentContent>
+            {(username === commentDetails.user.username)?<DeleteButton onClick={handleDeleteComment}><TiDeleteOutline fontSize={14}/></DeleteButton> : null}
+        </CommentWrapper>
     );
 }
 
 export default Comment;
+
+const CommentWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content:start;
+`;
+
+const CommentUsername = styled.h5`
+    padding-left: 10px;
+    padding-right: 5px;
+    margin: 0;
+`;
+
+const CommentContent = styled.h5`
+    font-weight: normal;
+    margin: 0;
+    margin-bottom: 3px;
+`;
+
+const DeleteButton = styled.button`
+    border: none;
+    background: #f3f3fc;
+    cursor: pointer;
+`;

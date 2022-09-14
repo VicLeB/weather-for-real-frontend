@@ -7,6 +7,7 @@ function ForecastDay({forecastDay, fahrenheit}) {
 
     // function getDayName(dateStr, locale){
     //     let date = new Date(dateStr);
+    //     console.log(date);
     //     return date.toLocaleDateString(locale, {weekday: 'long'});
     // }
 
@@ -15,7 +16,7 @@ function ForecastDay({forecastDay, fahrenheit}) {
 
     return (
         <DayForecastWrapper>
-            <Date>{forecastDay.date}</Date>
+            <DateTitle>{forecastDay.date}</DateTitle>
             <figure>
                 <FigureImg src={forecastDay.day.condition.icon}/>
                 <FigureCaption>{forecastDay.day.condition.text}</FigureCaption>
@@ -28,7 +29,7 @@ function ForecastDay({forecastDay, fahrenheit}) {
 
 export default ForecastDay;
 
-const Date = styled.h5`
+const DateTitle = styled.h5`
     font-weight: normal;
 `;
 

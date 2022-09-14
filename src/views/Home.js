@@ -97,7 +97,7 @@ const LeftHomePage = styled.div`
     display: flex;
     position: fixed;
     flex-direction: column;
-    width: 40vw;
+    width: 35vw;
 `;
 
 const FeedPosts = styled.div`
@@ -109,5 +109,5 @@ const FeedPosts = styled.div`
 
 const RightHomePage = styled.div`
     position: absolute;
-    right: 20%;
+    right: 15%;
 `;
