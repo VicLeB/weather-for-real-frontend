@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../slices/UserSlice';
+import styled from 'styled-components';
+import {BiErrorCircle} from 'react-icons/bi';
 import {
     StyledForm,
     StyledInput,
@@ -72,18 +74,18 @@ function SignUpForm({setShowLogin}) {
             Username
                     <StyledInput type="text" value={username} onChange={(e)=> setUsername(e.target.value)}/>
                 </label>
-                {errors.username? <div>Username {errors.username.map((error)=> `${error} `)}</div>:null}
+                {errors.username? <ErrorMessages><BiErrorCircle fontSize={20}/> Username {errors.username.map((error)=> `${error} `)}</ErrorMessages>:null}
                 <label>
             Password
                     <StyledInput type="password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
                 </label>
-                {errors.password? <div>Password {errors.password.map((error)=> `${error} `)}</div>:null}
+                {errors.password? <ErrorMessages><BiErrorCircle fontSize={20}/> Password {errors.password.map((error)=> `${error} `)}</ErrorMessages>:null}
                 <label>
             Set default location with Zip/Postal code:
                     <StyledInput type="text" value={homeLocationCode} onChange={(e) => setHomeLocationCode(e.target.value)}/>
                     <h5>* enter a 5 digit zip-code, or 6 character postal-code (example: zip: 91111 or postal:L6H7M1)</h5>
                 </label>
-                {errors.home_location_code? <div>Zip/Postal code {errors.home_location_code.map((error)=> `${error} `)}</div>:null}
+                {errors.home_location_code? <ErrorMessages><BiErrorCircle fontSize={20}/> {errors.home_location_code.map((error)=> `Zip/Postal code ${error} `)}</ErrorMessages>:null}
                 <StyledButton type='submit' value="Create account">Create Account</StyledButton>
                 <p>Already have an account? <StyledButton onClick={()=> setShowLogin(true)}>Sign in</StyledButton></p>
             </StyledForm>
@@ -92,3 +94,8 @@ function SignUpForm({setShowLogin}) {
 }
 
 export default SignUpForm;
+
+const ErrorMessages = styled.div`
+    color: red;
+    margin-bottom: 3px;
+`;

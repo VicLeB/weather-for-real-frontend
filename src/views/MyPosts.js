@@ -62,5 +62,5 @@ const MyPostsWrapper= styled.div`
     flex-direction: row;
     overflow-wrap: normal;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-around;
 `;

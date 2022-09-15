@@ -19,12 +19,11 @@ function CreateNewPostForm() {
     const [stateProvince, setStateProvince] = useState('');
     const [country, setCountry]= useState('USA');
     const today = new Date();
-    const date = today.getMonth()+'-'+(today.getDay())+'-'+(today.getFullYear());
-    const time = (today.getHours() > 12? today.getHours() - 12: today.getHours())+':'+today.getMinutes();
+    const date =`${today.getMonth() + 1}-${today.getDate()}-${today.getFullYear()}`;
+    const time = today.getHours() > 12? `${today.getHours() - 12}:${today.getMinutes()}`: `${today.getHours()}:${today.getMinutes()}`;
     const amPm = today.getHours() > 12? 'PM' : 'AM';
-    const dateTime = date+' '+time+' '+amPm;
+    const dateTime = `${date} ${time} ${amPm}`;
     const navigate = useNavigate();
-    console.log(date);
 
 
 

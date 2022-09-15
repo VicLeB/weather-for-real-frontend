@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import Comment from './Comment';
+import {FaTrashAlt} from 'react-icons/fa';
 const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 
@@ -10,6 +12,7 @@ function MyPostCard({post, handleEditPost, handleDeletePost}) {
     const [title, setTitle] = useState('');
     const [caption, setCaption] = useState('');
     const [writeComment, setWriteComment] = useState(false);
+    const [postComments, setPostComments] = useState(post.comments);
     const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 
@@ -50,41 +53,55 @@ function MyPostCard({post, handleEditPost, handleDeletePost}) {
         }).then(() => handleDeletePost(post.id));
     }
 
+    const commentsList = postComments.map((comment)=> {
+        return <Comment key={comment.id} comment={comment} />;
+    });
+
 
     return (
         <PostContainer>
             <ButtonContainer>
-                <EditDeleteButton onClick={handlePostDelete}>X</EditDeleteButton>
+                <EditDeleteButton onClick={handlePostDelete}><FaTrashAlt/></EditDeleteButton>
                 <EditDeleteButton onClick={handleEditClick}>Edit</EditDeleteButton>
             </ButtonContainer>
             {editPost? (
                 <>
                     <PostTop>
-                        <input type='text' placeholder={post.title} value={title} onChange={(e)=> setTitle(e.target.value)}/>
-                        <h4>{post.location}</h4>
+                        <TitleInput type='text' placeholder={post.title} value={title} onChange={(e)=> setTitle(e.target.value)}/>
+                        <PostLocation>{post.location}</PostLocation>
                     </PostTop>
                     <ImageWrapper>
                         <Image src={`${ENDPOINT}/${post.image.url}`}/>
                     </ImageWrapper>
-                    <UserName>Submitted by: {userData.username}</UserName>
-                    <input type='text' placeholder={post.caption} value={caption} onChange={(e)=> setCaption(e.target.value)}/>
+                    <UserCaptionWrapper>
+                        <UserName>{userData.username}</UserName>
+                        <CaptionInput type='text' placeholder={post.caption} value={caption} onChange={(e)=> setCaption(e.target.value)}/>
+                    </UserCaptionWrapper>
                     <SaveButtonWrapper>
-                        <EditDeleteButton onClick={handleSaveChanges}>Save Changes</EditDeleteButton>
+                        <SaveChangesButton onClick={handleSaveChanges}>Save Changes</SaveChangesButton>
                     </SaveButtonWrapper>
-                    <h5>{post.date}</h5>
+                    <CommentListContainer>
+                        {commentsList}
+                    </CommentListContainer>
+                    <DateTime>{post.date}</DateTime>
                 </>
             ):(
                 <>
                     <PostTop>
-                        <h3>{post.title}</h3>
-                        <h4>{post.location}</h4>
+                        <PostTitle>{post.title}</PostTitle>
+                        <PostLocation>{post.location}</PostLocation>
                     </PostTop>
                     <ImageWrapper>
                         <Image src={`${ENDPOINT}/${post.image.url}`}/>
                     </ImageWrapper>
-                    <UserName>Submitted by: {userData.username}</UserName>
-                    <h4>{post.caption}</h4>
-                    <h5>{post.date}</h5>
+                    <UserCaptionWrapper>
+                        <UserName>{userData.username}</UserName>
+                        <Caption>{post.caption}</Caption>
+                    </UserCaptionWrapper>
+                    <CommentListContainer>
+                        {commentsList}
+                    </CommentListContainer>
+                    <DateTime>{post.date}</DateTime>
                 </>
             )}
         </PostContainer>
@@ -98,17 +115,20 @@ const PostContainer = styled.div`
     flex-direction: column;
     align-content: center;
     max-height: 800px;
-    max-width: 400px;
-    min-width: 400px;
-    border: 1px solid black;
+    max-width: 25vw;
+    min-width: 25vw;
+    border: none;
     border-radius: 7px;
     margin-bottom: 3%;
+    margin-left: 1%;
+    background-color: #f3f3fc;
 `;
 
 const ImageWrapper = styled.div`
     padding-bottom: 100%;
     position: relative;
     width: 100%;
+    margin-bottom: 5px;
 `;
 
 const Image = styled.img`
@@ -125,14 +145,48 @@ const PostTop = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-bottom: 0;
+    margin-bottom: 3px;
+`;
+
+const PostTitle = styled.h3`
+    font-weight: normal;
+`;
+
+const PostLocation = styled.h4`
+    font-weight: normal;
+`;
+
+const UserCaptionWrapper= styled.div`
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
 `;
 
 const UserName = styled.h5`
     text-align: left;
-    margin: 0;
     padding-left: 5px;
+    padding-right: 5px;
+    margin: 0;
 `;
+
+const Caption = styled.h5`
+    font-weight: normal;
+    margin: 0;
+`;
+
+const CommentListContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 40px;
+`;
+
+const DateTime = styled.h5`
+    font-weight: normal;
+    text-align: left;
+    padding-left: 10px;
+`;
+
 
 const ButtonContainer = styled.div`
     display: flex;
@@ -142,18 +196,53 @@ const ButtonContainer = styled.div`
 `;
 
 const EditDeleteButton = styled.button`
-    background: #256ce1;
-    color: #fff;
+    background: #f3f3fc;
+    color: black;
+    font-weight: bold;
     border-radius: 4px;
     border: none;
     outline: none;
     padding: 5px 10px;
     cursor: pointer;
+
+    &:hover{
+        color: #256ce1;
+    }
+`;
+
+const SaveChangesButton = styled.button`
+    background: #256ce1;
+    color: #fff;
+    font-weight: normal;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover{
+        background: #fff;
+        color: #256ce1;
+    }
 `;
 
 const SaveButtonWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: end;
     margin-top: 6px;
+    margin-right: 10px;
+`;
+
+const TitleInput = styled.input`
+    border: none;
+    border-radius: 5px;
+    height: 50%;
+    margin-top: 10px;
+`;
+
+const CaptionInput = styled.input`
+    width: 80%;
+    border: none;
+    border-radius: 5px;
 `;
