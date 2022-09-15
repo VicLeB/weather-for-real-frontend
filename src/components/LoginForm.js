@@ -44,7 +44,6 @@ function LoginForm({setShowLogin}) {
             }
         });
     }
-    console.log(errors);
 
     return (
         <>

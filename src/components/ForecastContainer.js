@@ -6,7 +6,7 @@ function ForecastContainer({locationData, fahrenheit}) {
 
     if (locationData === undefined){
         return(<div>
-            <h3>Your five day forecast</h3>
+            <h3>Five Day Forecast</h3>
         </div>
         );
     } else {
@@ -18,7 +18,7 @@ function ForecastContainer({locationData, fahrenheit}) {
 
         return (
             <div>
-                <h3>Your five day forecast</h3>
+                <h3>Five Day Forecast</h3>
                 <StyledForecastWrapper>
                     {forecastDayList}
                 </StyledForecastWrapper>
@@ -31,5 +31,10 @@ export default ForecastContainer;
 
 const StyledForecastWrapper = styled.div`
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    background: rgb(185, 203, 223, 0.7);
+    border-radius: 5px;
+    border: none;
+    margin-left: 10px;
+    min-width: 100%;
 `;
