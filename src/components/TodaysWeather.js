@@ -35,8 +35,8 @@ function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
                     <CurrentTemp>{fahrenheit? `${current?.temp_f}°F` : `${current?.temp_c}°C`}</CurrentTemp>
                 </FocusedDetails>
                 <TodaysDetails>
-                    <h5>Feels like {fahrenheit? `${current?.feelslike_f}°F` : `${current?.feelslike_c}°C`}</h5>
-                    <p><BsWind/> {fahrenheit? `${current?.wind_mph} mph`:`${current?.wind_kph} kph`}</p>
+                    <FeelsLike>Feels like {fahrenheit? `${current?.feelslike_f}°F` : `${current?.feelslike_c}°C`}</FeelsLike>
+                    <WindInfo><BsWind fontSize={20}/> {fahrenheit? `${current?.wind_mph} mph`:`${current?.wind_kph} kph`}</WindInfo>
                 </TodaysDetails>
                 <InputWrapper>
                     <p>Click for {checked? '°C': '°F'}</p>
@@ -64,17 +64,30 @@ const FocusedDetails = styled.div`
     align-items: center;
 `;
 
+
 const CurrentTemp = styled.h2`
     font-size: 45px;
     font-weight: normal;
 
-`;
+    `;
 
 const TodaysDetails = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     width: 30%;
+    `;
+
+const FeelsLike = styled.h5`
+        font-weight: normal;
+    `;
+
+const WindInfo = styled.h5`
+    font-weight: normal;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 `;
 
 const InputWrapper = styled.label`

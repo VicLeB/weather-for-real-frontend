@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import {BiErrorCircle} from 'react-icons/bi';
 import {
     StyledForm,
     StyledInput,
@@ -57,7 +59,7 @@ function LoginForm({setShowLogin}) {
                     Password
                     <StyledInput type='password' value={password} onChange= {(e)=> setPassword(e.target.value)}/>
                 </label>
-                {errors.message?<div>{errors.message}</div>:null}
+                {errors.message?<ErrorMessages><BiErrorCircle fontSize={20}/> {errors.message}</ErrorMessages>:null}
                 <StyledButton type='submit' >Login</StyledButton>
                 <p>Don&apos;t have and account? Create one now: <StyledButton onClick={()=> setShowLogin(false)}>Sign up</StyledButton>
                 </p>
@@ -67,3 +69,7 @@ function LoginForm({setShowLogin}) {
 }
 
 export default LoginForm;
+
+const ErrorMessages = styled.div`
+    color: red;
+`;

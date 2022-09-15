@@ -3,25 +3,26 @@ import styled from 'styled-components';
 import {IoRainyOutline} from 'react-icons/io5';
 
 function ForecastDay({forecastDay, fahrenheit}) {
-    // let dateStr = forecastDay.date;
+    const dateStr = forecastDay.date;
 
-    // function getDayName(dateStr, locale){
-    //     let date = new Date(dateStr);
-    //     console.log(date);
-    //     return date.toLocaleDateString(locale, {weekday: 'long'});
-    // }
+    function getDayName(dateStr, locale){
+        const date = new Date(dateStr);
+        return date.toLocaleDateString(locale, {weekday: 'long', timeZone: 'UTC'});
+    }
 
-    // let day = getDayName(dateStr, 'en-US');
-    // console.log(day);
+    const day = getDayName(dateStr, 'en-US');
 
     return (
         <DayForecastWrapper>
-            <DateTitle>{forecastDay.date}</DateTitle>
+            <DateTitle>{day}</DateTitle>
             <figure>
                 <FigureImg src={forecastDay.day.condition.icon}/>
                 <FigureCaption>{forecastDay.day.condition.text}</FigureCaption>
             </figure>
-            <HighLow>{fahrenheit? `${forecastDay.day.maxtemp_f}°F/ ${forecastDay.day.mintemp_f}°F` : `${forecastDay.day.maxtemp_c}°C/ ${forecastDay.day.mintemp_c}°C` }</HighLow>
+            <HighLow>
+                {fahrenheit ? `${forecastDay.day.maxtemp_f}°F/ ${forecastDay.day.mintemp_f}°F`
+                    : `${forecastDay.day.maxtemp_c}°C/ ${forecastDay.day.mintemp_c}°C`}
+            </HighLow>
             <Precipitation><IoRainyOutline/> {forecastDay.day.daily_chance_of_rain}%</Precipitation>
         </DayForecastWrapper>
     );
