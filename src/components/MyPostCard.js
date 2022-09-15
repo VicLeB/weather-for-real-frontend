@@ -61,7 +61,7 @@ function MyPostCard({post, handleEditPost, handleDeletePost}) {
     return (
         <PostContainer>
             <ButtonContainer>
-                <EditDeleteButton onClick={handlePostDelete}><FaTrashAlt/></EditDeleteButton>
+                <EditDeleteButton onClick={handlePostDelete}><FaTrashAlt fontSize={18}/></EditDeleteButton>
                 <EditDeleteButton onClick={handleEditClick}>Edit</EditDeleteButton>
             </ButtonContainer>
             {editPost? (
