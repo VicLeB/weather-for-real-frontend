@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.e1f89237.css","mappings":"AACA,KAEE,kBAAmB,CADnB,QAEF,CCJA,KAEE,8BAAkC,CADlC,iBAEF","sources":["index.css","App.css"],"sourcesContent":["\nbody {\n  margin: 0;\n  background: #c7dbf2;\n}\n\n",".App {\n  text-align: center;\n  font-family: 'Signika', sans-serif;\n}"],"names":[],"sourceRoot":""}
