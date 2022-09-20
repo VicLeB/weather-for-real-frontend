@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import Comment from './Comment';
 import {FaRegComment} from 'react-icons/fa';
+import {post, ENDPOINT} from '../lib/api';
 
 
-const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 function Post({postData}) {
     const [writeComment, setWriteComment] = useState(false);
@@ -25,15 +25,8 @@ function Post({postData}) {
 
     function handleAddComment(e){
         e.preventDefault();
-        fetch(`${ENDPOINT}/comments`,{
-            method:'POST',
-            headers:{
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json',
-                Accepts: 'application/json'
-            },
-            body: JSON.stringify(newCommentData)
-        }).then((res)=>{
+        post('/comments', JSON.stringify(newCommentData)
+        ).then((res)=>{
             if(res.ok){
                 res.json().then((addedComment)=>{
                     handleAllCommentsList(addedComment);

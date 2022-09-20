@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import Comment from './Comment';
 import {FaTrashAlt} from 'react-icons/fa';
-const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
+import {patch, destroy, ENDPOINT} from '../lib/api';
 
 
 function MyPostCard({post, handleEditPost, handleDeletePost}) {
@@ -11,28 +11,20 @@ function MyPostCard({post, handleEditPost, handleDeletePost}) {
     const [editPost, setEditPost] = useState(false);
     const [title, setTitle] = useState('');
     const [caption, setCaption] = useState('');
-    const [writeComment, setWriteComment] = useState(false);
     const [postComments, setPostComments] = useState(post.comments);
-    const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 
 
     function handleEditClick(){
         setEditPost(!editPost);
     }
 
-    function handleSaveChanges(){
-        fetch(`${ENDPOINT}/posts/${post.id}`,{
-            method: 'PATCH',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-            body:JSON.stringify({
+    function handleSaveChanges() {
+        patch(`/posts/${post.id}`,
+            JSON.stringify({
                 title: title || post.title,
                 caption: caption || post.caption
             }),
-        }).then((res)=>{
+        ).then((res)=>{
             if(res.ok){
                 res.json().then((editedPost)=>{
                     handleEditPost(editedPost);
@@ -45,12 +37,7 @@ function MyPostCard({post, handleEditPost, handleDeletePost}) {
     }
 
     function handlePostDelete(){
-        fetch(`${ENDPOINT}/posts/${post.id}`,{
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        }).then(() => handleDeletePost(post.id));
+        destroy(`/posts/${post.id}`).then(() => handleDeletePost(post.id));
     }
 
     const commentsList = postComments.map((comment)=> {

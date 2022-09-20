@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import styled from 'styled-components';
+
 
 function LocationSearch({handleLocationSearch }) {
     const [locationSearchValue, setLocationSearchValue] = useState('');
