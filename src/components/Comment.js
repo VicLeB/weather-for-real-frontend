@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {TiDeleteOutline} from 'react-icons/ti';
+import {get,destroy} from '../lib/api';
 
 function Comment({comment, handleCommentDisplay}) {
     const {username} = useSelector((state) => state.user);
@@ -10,17 +10,12 @@ function Comment({comment, handleCommentDisplay}) {
 
 
     useEffect(()=>{
-        fetch(`${ENDPOINT}/comments/${comment.id}`)
+        get(`/comments/${comment.id}`)
             .then(res=> res.json()).then(setCommentDetails);
     },[]);
 
     function handleDeleteComment(){
-        fetch(`${ENDPOINT}/comments/${comment.id}`,{
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        }).then(() => handleCommentDisplay(comment.id));
+        destroy(`/comments/${comment.id}`).then(() => handleCommentDisplay(comment.id));
     }
 
     if(commentDetails === undefined){

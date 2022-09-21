@@ -9,6 +9,8 @@ import {
     StyledSelectBox,
     FileUploadBox
 } from '../styles/Form.style';
+import {post} from '../lib/api';
+const stateOrProvince = ['AL','AK','AS','AZ','AR','CA','CO','CT','DE','DC','FM','FL','GA','GU','HI','ID','IL','IN','IA','KS','KY','LA','ME','MH','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','MP','OH','OK','OR','PW','PA','PR','RI','SC','SD','TN','TX','UT','VT','VI','VA','WA','WV','WI','WY','AB','BC','MB','NB','NL','NS','NT','NU','ON','PE','QC','SK','YT'];
 
 function CreateNewPostForm() {
     const userData = useSelector((state) => state.user);
@@ -27,9 +29,6 @@ function CreateNewPostForm() {
 
 
 
-    const ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://weather-for-real.herokuapp.com/' : 'http://localhost:3000';
-    const stateOrProvince = ['AL','AK','AS','AZ','AR','CA','CO','CT','DE','DC','FM','FL','GA','GU','HI','ID','IL','IN','IA','KS','KY','LA','ME','MH','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','MP','OH','OK','OR','PW','PA','PR','RI','SC','SD','TN','TX','UT','VT','VI','VA','WA','WV','WI','WY','AB','BC','MB','NB','NL','NS','NT','NU','ON','PE','QC','SK','YT'];
-
     function handleImageChange(e){
         setImageFile(e.target.files[0]);
     }
@@ -45,14 +44,7 @@ function CreateNewPostForm() {
         formData.append('user_id', userData.id);
         formData.append('date', dateTime);
 
-        fetch(`${ENDPOINT}/posts`,{
-            method: 'POST',
-            headers:{
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                Accepts: 'application/json'
-            },
-            body: formData
-        })
+        post('/posts',formData)
             .then(() => {
                 setTimeout(() => navigate('/'), 100);
             })

@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# WEATHER FOR REAL
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This app intends to provide users with weather data as well as a social feed of what the weather is really like in their area.
 
-## Available Scripts
+This project was inspired by conversations with friends and family about the weather forecast and what the weather was really like. For example, the weather report says it is raining but in reality we are seeing blue skies!
 
-In the project directory, you can run:
+### View the project live
+* check out the project on [Github Pages](https://vicleb.github.io/weather-for-real-frontend/)
+* note: for the purpose of this project the search by location feature has been restricted to the USA and Canada.
 
-### `npm start`
+## Technologies used:
+* React
+* React router v6
+* Redux
+* Styled Components
+* Google Place Autocomplete
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started Locally
+* See [Back-end repo](https://github.com/VicLeB/weather-for-real-backend) to run the backend locally
+* run  `npm install` to install required react dependencies
+* run `npm start` to run the app in development mode
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+** note: to enable the search bar functionality you must generate your own api key from google places autocomplete. The use of this feature is however enabled on the hosted version of the app. See [Github Pages](https://vicleb.github.io/weather-for-real-frontend/)
 
-### `npm test`
+## User stories
+### Home page:
+A non logged in user:
+* With location services will view the current weather for their location as well as the corresponding “user feed” data from the last 24 hours.
+* Without location service, the user is prompted to use the search bar to find a location.
+* Non logged in users cannot leave comments.
+* Non logged in users cannot post to the feed
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Logged in user:
+* Has access to the same features as a non logged in user but may leave comments on feed posts.
+* The user can submit their own post to the feed.
+* The logged in user has access to view all the posts they have created.
 
-### `npm run build`
+### Viewing Weather data:
+* Alongside the feed feature, users regardless of their login status will have access to current weather data.
+* In addition the user will be able to view forecast data for the next 5 days.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Login and signup:
+* On arrival, the user will be in a view only mode.
+* The User May navigate to the login screen to login to their existing account or have the option to create a new account if they do not already have one.
+* When a user is signing up for an account, in addition to a username/ password their Home Location information will be asked for in the form of a zip code or postal code.
+* Once logged in, the user will be redirected to the home page.
+* When logged in, the data provided for their home location will be utilized to display the weather and if there are posts that correspond to that location, they will be displayed in the post feed.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Creating a post:
+* A logged in user will now see a button ‘Create Post’ at the top of the post feed
+* The user will be asked to submit a title, an image file, caption, city, state, and country
+* This post will have a date and time associated with it.
+* The newly created post will display at the top of the feed for that area as it is ordered by time created
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Viewing all created posts:
+* Logged in users can navigate to a tab called ‘My Posts’ where they may view all the posts they have created.
+* These posts will be rendered with the most recent post displaying first.
+* The LoggedIn user has the ability to edit or delete each post.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
