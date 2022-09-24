@@ -39,9 +39,9 @@ function TodaysWeather({locationData, handleDegreeType, fahrenheit}) {
                     <WindInfo><BsWind fontSize={20}/> {fahrenheit? `${current?.wind_mph} mph`:`${current?.wind_kph} kph`}</WindInfo>
                 </TodaysDetails>
                 <InputWrapper>
-                    <p>Click for {checked? '°C': '°F'}</p>
                     <Input type='checkbox' checked={checked} onChange={handleTempClick}/>
                     <Switch/>
+                    <SwitchText fahrenheit={fahrenheit} checked={checked} />
                 </InputWrapper>
             </TodaysWeatherWrapper>
         </div>
@@ -91,56 +91,81 @@ const WindInfo = styled.h5`
 `;
 
 const InputWrapper = styled.label`
+    --width: 70px;
+    --height: calc(var(--width) / 3);
+
     position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 20%;
+    display: inline-block;
+    width: var(--width);
+    height: var(--height);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: var(--height);
+    cursor: pointer;
 `;
 
 const Input = styled.input`
-        position: absolute;
-        left: -9999px;
-        top: -9999px;
+    display: none;
 
-        &:checked + span {
-            background-color: #1890ff;
+    &:checked + span{
+        background-color: #256ce1;
 
-            &:before {
-                left: 27px;
-            }
+        &:before{
+            transform: translateX(calc(var(--width) - var(--height)));
         }
-
-        &:focus + span{
-            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
-        }
-
-        &:focus:checked + span {
-            box-shadow: 0 0 0 4px rgba(24, 144, 255, 0.2);
-        }
-    `;
+    }
+`;
 
 const Switch = styled.span`
-    display: flex;
-    position: relative;
-    align-self: center;
-    cursor: pointer;
-    width: 45px;
-    height: 20px;
-    background: #bfbfbf;
-    border-radius: 100px;
-    transition: background-color 0.2s, box-shadow 0.2s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--height);
+    background-color: #ccc;
+    transition: all 0.4s ease-in-out;
 
     &:before{
         content: '';
         position: absolute;
-        width: 16px;
-        height: 16px;
-        border-radius: 21px;
-        top: 2px;
-        left: 2px;
-        background: #fff;
-        transition: 0.2s;
-        box-shadow: 0 2px 4px 0 rgba(0, 35, 11, 0.2);
+        top: 0;
+        left: 0;
+        width: calc(var(--height));
+        height: calc(var(--height));
+        border-radius: calc(var(--height) / 2);
+        background-color: #fff;
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease-in-out;
     }
-    `;
+`;
+
+const SwitchText = styled.span`
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    font-family: sans-serif;
+    transition: all 0.4s ease-in-out;
+
+    &:after{
+        content: '${props => props.fahrenheit ? '°F' : null}';
+        position: absolute;
+        right: 5px;
+        color: #4d4d4d;
+        opacity: ${props => props.checked ? 1 : 0};
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+        transition: all 0.4s ease-in-out;
+    }
+
+    &:before{
+        content: '${props => props.fahrenheit ? null : '°C'}';
+        position: absolute;
+        left: 5px;
+        color: #4D4D4D;
+        opacity: ${props => props.checked ? 0 : 1};
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.4);
+        transition: all 0.4s ease-in-out;
+    }
+`;
